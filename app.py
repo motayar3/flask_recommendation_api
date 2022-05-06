@@ -1,4 +1,3 @@
-
 from flask import Flask, jsonify,request
 from flask_restful import Resource, Api
 import pickle
@@ -8,7 +7,6 @@ from model import *
 from utils import *
 import numpy as np
 import xgboost as xgb
-
 
 
 
@@ -33,10 +31,9 @@ class prediction(Resource):
         target_cols = ['Saving Account','Guarantees','Current Account','Derivada Account','Payroll Account','Junior Account','Más particular Account','particular Account','particular Plus Account','Short-term Deposits','Medium-term Deposits','Long-term Deposits','e-account','Funds','Mortgage','Pensions','Loans','Taxes','Credit Card','Securities','Home Account','Payroll','Pensions','Direct Debit']
         target_cols = target_cols[2:]
         target_cols = np.array(target_cols)
+
         preds = np.argsort(preds, axis=1)
         preds = np.fliplr(preds)[:,:7]
-        
-
         
         final_preds = [", ".join(list(target_cols[pred])) for pred in preds]
         out_df = jsonify(final_preds)
